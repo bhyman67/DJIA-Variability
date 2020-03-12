@@ -3,6 +3,8 @@
 # https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average
 # https://www.investopedia.com/investing/what-moves-the-djia/
 
+# include percentages
+# go back further but filter out the bad data... why is it bad???
  
 import alpaca_trade_api as tradeapi
 import matplotlib.pyplot as plt
@@ -42,7 +44,7 @@ for index, symbol in enumerate(symbols):
 companyList = symbols
 
 api = tradeapi.REST()
-barset = api.get_barset(companyList, 'day', 190, '2020-03-06')
+barset = api.get_barset(companyList, 'day', 194, '2020-03-06')
 
 # Retrieve needed data
 dFrameList = []
