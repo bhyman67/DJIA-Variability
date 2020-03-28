@@ -24,16 +24,16 @@ def right(x,num):
 #   -> https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average
 # ******************************************************************************
 
+# Scrape table from web
 elmtAttrs = {'id':'constituents'}
 url = 'https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average'
-
 resp = requests.get(url)
 soup = BeautifulSoup(resp.content,'lxml')
 table = soup.find('table',elmtAttrs)
 df = pd.read_html(str(table))[0]
 symbols = list(df['Symbol'])
 
-# Extract the ticker sybols
+# Extract the ticker symbols
 for index, symbol in enumerate(symbols):
 
     # cut out the unicode: https://stackoverflow.com/questions/10993612/python-removing-xa0-from-string
@@ -50,10 +50,9 @@ companyList = symbols
 # API call to alpaca for market data
 # ***********************************
 
+# Retrieve needed data
 api = tradeapi.REST()
 barset = api.get_barset(companyList, 'day', 194, '2020-03-06')
-
-# Retrieve needed data
 dFrameList = []
 for tickerSymbol in companyList:
     dFrame = barset[tickerSymbol].df
@@ -65,9 +64,11 @@ print(dFrame)
 # convert index into col
 dFrame.reset_index(inplace=True)
 
+# aggregate data
 dowDivisor =  0.14744568353097
 x = dFrame.groupby('time')['close'].sum()/dowDivisor
 
+# calculate the change over time
 df = pd.DataFrame(x)
 df.reset_index(inplace=True)
 df = df.sort_values('time', ascending = False)
@@ -75,9 +76,11 @@ df['change'] = df.close.diff(-1)
 df['time'] = df['time'].apply(lambda x: x.date())
 df.to_excel('output.xlsx')
 
-# Save off the plot
+# ***************************************
+# Build the plot and save it off the plot
+# ***************************************
 
 plt.bar(df.time.values, df.change.values)
-plt.show()
+plt.savefig("DJIA Variability Plot.png")
 
 print('done')
