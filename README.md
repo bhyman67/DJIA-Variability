@@ -5,6 +5,6 @@
 <h1></h1>
 <a href = "https://github.com/bhyman67/DJIA-Variability">repo</a>
 
-![alt text](DJIA Variability Plot.png)
+![alt text](DJIA_Variability_Plot.png)
 
 <p align="right">Back to <a href="https://bhyman67.github.io/">BHyman Analytics</a></p>
