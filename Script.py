@@ -75,6 +75,8 @@ df['change'] = df.close.diff(-1)
 df['time'] = df['time'].apply(lambda x: x.date())
 df.to_excel('output.xlsx')
 
+# Save off the plot
+
 plt.bar(df.time.values, df.change.values)
 plt.show()
 
