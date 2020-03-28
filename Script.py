@@ -1,6 +1,5 @@
 # i want to analyze the variability of the DJIA over the past year...
 
-# https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average
 # https://www.investopedia.com/investing/what-moves-the-djia/
 
 # include percentages
@@ -20,6 +19,10 @@ def right(x,num):
 
     return x[-num:]
 
+# ******************************************************************************
+# Retrieve all constituents (companies) that make up the DOW from this website:
+#   -> https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average
+# ******************************************************************************
 
 elmtAttrs = {'id':'constituents'}
 url = 'https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average'
@@ -42,6 +45,10 @@ for index, symbol in enumerate(symbols):
         symbols[index] = strList[-1].strip()
 
 companyList = symbols
+
+# ***********************************
+# API call to alpaca for market data
+# ***********************************
 
 api = tradeapi.REST()
 barset = api.get_barset(companyList, 'day', 194, '2020-03-06')
