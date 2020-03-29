@@ -59,7 +59,6 @@ for tickerSymbol in companyList:
     dFrame['Ticker Symbol'] = tickerSymbol
     dFrameList.append(dFrame)
 dFrame = pd.concat(dFrameList)
-print(dFrame)
 
 # convert index into col
 dFrame.reset_index(inplace=True)
@@ -80,7 +79,14 @@ df.to_excel('output.xlsx')
 # Build the plot and save it off the plot
 # ***************************************
 
+# need to find a way to set the dimensions...
+
+# https://uproer.com/articles/image-size-calculator-px-in/
+plt.figure(
+    figsize=(34.133,12.65),
+    dpi=75
+)
 plt.bar(df.time.values, df.change.values)
-plt.savefig("DJIA Variability Plot.png")
+plt.savefig("DJIA_Variability_Plot.png")
 
 print('done')
